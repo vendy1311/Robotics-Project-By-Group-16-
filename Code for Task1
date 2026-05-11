@@ -1,0 +1,46 @@
+#include <Braccio.h>
+#include <Servo.h>
+
+void setup() {
+  
+  // Initialize Braccio robotic arm
+  // Initial safety position:
+  // M1(Base) = 90°
+  // M2(Shoulder) = 45°
+  // M3(Elbow) = 180°
+  // M4(Wrist Vertical) = 180°
+  // M5(Wrist Rotation) = 90°
+  // M6(Gripper) = 10°
+
+  Braccio.begin();
+}
+
+void loop() {
+
+  // Starting position with gripper open
+  Braccio.ServoMovement(20, 0, 45, 180, 180, 90, 10);
+  delay(1000);
+
+  // Close gripper to grab object
+  Braccio.ServoMovement(20, 0, 45, 180, 180, 90, 73);
+  delay(1000);
+
+  // Lift object slightly
+  Braccio.ServoMovement(20, 0, 45, 180, 90, 90, 73);
+  delay(1000);
+
+  // Rotate base to another position
+  Braccio.ServoMovement(20, 90, 45, 180, 90, 90, 73);
+  delay(1000);
+
+  // Lower object
+  Braccio.ServoMovement(20, 90, 45, 180, 180, 90, 73);
+  delay(1000);
+
+  // Open gripper to release object
+  Braccio.ServoMovement(20, 90, 45, 180, 180, 90, 10);
+  delay(1000);
+
+  // Stop repeating
+  while(true);
+}
